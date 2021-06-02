@@ -3,7 +3,7 @@ package hibernate_one_to_one.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Details")
+@Table(name = "details")
 public class Detail {
 
     @Id
