@@ -5,7 +5,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class Test2 {
+import java.util.List;
+
+public class UpdateObject {
     public static void main(String[] args) {
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml").addAnnotatedClass(Employee.class)
@@ -13,17 +15,21 @@ public class Test2 {
 
         try {
             Session session = factory.getCurrentSession();
-            Employee emp = new Employee("Oleg", "Sidorov", "HR", 700);
             session.beginTransaction();
-            session.save(emp);
-//            session.getTransaction().commit();
 
-            int myId = emp.getId();
-//            session = factory.getCurrentSession();
-//            session.beginTransaction();
-            Employee employee = session.get(Employee.class, myId);
+//            Employee emp = session.get(Employee.class, 1);
+//            emp.setSalary(1500);
+
+//            session.createQuery("update Employee set salary = 1000 " +
+//                    "where firstName = 'Aleksandr'").executeUpdate();
+            List<Employee> emps = session.createQuery("FROM Employee").getResultList(); // pri rabote s HQL pishetcya imya klassa
+
+            for (int i = 0; i < emps.size(); i++) {
+                emps.get(i).setSalary(i + 601);
+            }
+
+
             session.getTransaction().commit();
-            System.out.println(employee);
 
             System.out.println("Done!");
 
