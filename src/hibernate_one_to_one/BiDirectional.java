@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class Test1 {
+public class BiDirectional {
     public static void main(String[] args) {
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
@@ -17,51 +17,48 @@ public class Test1 {
         Session session = null;
 
         try {
-//            Session session = factory.getCurrentSession();
-//            Employee employee = new Employee("Meiram", "Ramazanov"
-//                    , "IT", 500);
+//            1.
+//            session = factory.getCurrentSession();
+//            Employee employee = new Employee("Nikolay", "Petrov"
+//                    , "HR", 850);
 //
-//            Detail detail = new Detail("Baku", "12345678", "kst@mail.ru");
+//            Detail detail = new Detail("New-York", "65432178"
+//                    , "mikolay@mail.ru");
 //
 //            employee.setEmpDetail(detail);
+//            detail.setEmployee(employee);
 //            session.beginTransaction();
 //
-//            session.save(employee);
+//            session.save(detail);
 //
 //            session.getTransaction().commit();
 //            System.out.println("Done!");
 
-//            Session session = factory.getCurrentSession();
-//            Employee employee = new Employee("Oleg", "Smirnov"
-//                    , "Sales", 700);
-//
-//            Detail detail = new Detail("Moscow", "98765432", "smirnov.oleg@mail.ru");
-//
-//            employee.setEmpDetail(detail);
-//            session.beginTransaction();
-//
-//            session.save(employee);
-//
-//            session.getTransaction().commit();
-//            System.out.println("Done!");
-
+//            2. Получение таблицы через - get
 //            session = factory.getCurrentSession();
 //
 //            session.beginTransaction();
-//            Employee emp = session.get(Employee.class, 1);
-//            System.out.println(emp.getEmpDetail());
+//
+//            Detail detail = session.get(Detail.class, 4);
+//            System.out.println(detail.getEmployee());
 //
 //            session.getTransaction().commit();
 //            System.out.println("Done!");
 
+//            3. Удаление
             session = factory.getCurrentSession();
 
             session.beginTransaction();
-            Employee emp = session.get(Employee.class, 2);
-            session.delete(emp);
+
+            Detail detail = session.get(Detail.class, 1);
+//          "Разрушение связь между строками"
+            detail.getEmployee().setEmpDetail(null);
+
+            session.delete(detail);
 
             session.getTransaction().commit();
             System.out.println("Done!");
+
         } finally {
             session.close();
             factory.close();

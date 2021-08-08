@@ -14,7 +14,7 @@ public class Detail {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "phone_number")// v qsl pishetsya 4erez defis
+    @Column(name = "phone_number")// v qsl pishetsya 4erez nizhniy defis
     private String phoneNumber;
 
     @Column(name = "email")
